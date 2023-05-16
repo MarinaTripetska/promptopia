@@ -11,9 +11,11 @@ const routs = {
   createPrompt: "/create-prompt",
   profile: "/profile",
 };
-
+// api/auth/callback/:provider
 const Nav = () => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
+  console.log("session:", session);
+  console.log("session.user:", session?.user);
 
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -40,7 +42,7 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href={routs.createPrompt} className="black_btn">
               Create Post
@@ -81,7 +83,7 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
               src="/assets/images/logo.svg"
