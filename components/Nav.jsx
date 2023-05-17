@@ -2,21 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { routs } from "@utils/routs";
 
-const routs = {
-  home: "/",
-  createPrompt: "/create-prompt",
-  profile: "/profile",
-};
-// api/auth/callback/:provider
 const Nav = () => {
   const { data: session } = useSession();
-  console.log("session:", session);
-  console.log("session.user:", session?.user);
-
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
