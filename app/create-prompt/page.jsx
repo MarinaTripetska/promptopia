@@ -5,10 +5,12 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import Form from "@components/Form";
+import { createPost } from "@utils/APIrequests";
 
 const CreatePrompt = () => {
   const router = useRouter();
   const { data: session } = useSession();
+
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     prompt: "",
@@ -20,14 +22,7 @@ const CreatePrompt = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch("/api/prompt/new", {
-        method: "POST",
-        body: JSON.stringify({
-          prompt: post.prompt,
-          userId: session?.user.id,
-          tag: post.tag,
-        }),
-      });
+      const response = await createPost(post, session?.user.id);
 
       if (response.ok) {
         router.push("/");
