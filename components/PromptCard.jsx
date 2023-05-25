@@ -4,8 +4,16 @@ import Image from "next/image";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import { routs } from "@utils/routs";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
+  const { data: session } = useSession();
+  // console.log("session: ", session);
+  const pathName = usePathname();
+  // console.log("path: ", pathName);
+  const router = useRouter();
+  // console.log("router: ", router);
+
   const [copied, setCopied] = useState("");
 
   const handleCopy = () => {
@@ -15,7 +23,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   };
 
   return (
-    <div className="prompt_card">
+    <li className="prompt_card">
       <div className="flex justify-between items-start gap-5">
         <div className="flex-1 flex justify-start items-center gap-3">
           <Image
@@ -64,7 +72,27 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       >
         {post.tag}
       </button>
-    </div>
+
+      {session?.user.id === post.creator._id && pathName === routs.profile && (
+        <div className="mt-2 flex-center gap-4 border-t border-gray-100 pt-2">
+          <button
+            type="button"
+            className="font-inter text-sm green_gradient cursor-pointer"
+            onClick={() => handleEdit(post)}
+          >
+            Edit
+          </button>
+
+          <button
+            type="button"
+            className="font-inter text-sm orange_gradient cursor-pointer"
+            onClick={() => handleDelete(post)}
+          >
+            Delete
+          </button>
+        </div>
+      )}
+    </li>
   );
 };
 

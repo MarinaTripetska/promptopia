@@ -4,6 +4,12 @@ export const fetchPosts = async () => {
   return data;
 };
 
+export const fetchUserPosts = async (userId) => {
+  const response = await fetch(`/api/users/${userId}/posts`);
+  const data = await response.json();
+  return data;
+};
+
 export const createPost = async (post, id) => {
   const response = await fetch("/api/prompt/new", {
     method: "POST",
