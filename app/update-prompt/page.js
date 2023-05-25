@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Form from "@components/Form";
-import { getPost } from "@utils/APIrequests";
+import { getPost, updatePost } from "@utils/APIrequests";
 
 const UpdatePrompt = () => {
   const router = useRouter();
@@ -20,13 +20,15 @@ const UpdatePrompt = () => {
   useEffect(() => {
     if (promptId) {
       (async () => {
-        const data = await getPost(promptId);
-        console.log("data: ", data);
-        //catch error unswear!
-        setPost({
-          prompt: data.prompt,
-          tag: data.tag,
-        });
+        const resp = await getPost(promptId);
+        if (resp.ok) {
+          const data = await resp.json();
+
+          setPost({
+            prompt: data.prompt,
+            tag: data.tag,
+          });
+        }
       })();
     }
   }, [promptId]);
@@ -34,15 +36,9 @@ const UpdatePrompt = () => {
   const updatePrompt = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    //  if (!promptId) return alert("Missing PromptId!");
+
     try {
-      const response = await fetch(`/api/prompt/${promptId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          prompt: post.prompt,
-          tag: post.tag,
-        }),
-      });
+      const response = await updatePost(post, promptId);
 
       if (response.ok) {
         router.push("/");

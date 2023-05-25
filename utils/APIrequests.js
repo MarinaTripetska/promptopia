@@ -24,6 +24,16 @@ export const createPost = async (post, id) => {
 
 export const getPost = async (id) => {
   const response = await fetch(`/api/prompt/${id}`);
-  const data = await response.json();
-  return data;
+  return response;
+};
+
+export const updatePost = async (post, id) => {
+  const response = await fetch(`/api/prompt/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      prompt: post.prompt,
+      tag: post.tag,
+    }),
+  });
+  return response;
 };
