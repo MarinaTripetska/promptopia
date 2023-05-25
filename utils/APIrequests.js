@@ -6,8 +6,7 @@ export const fetchPosts = async () => {
 
 export const fetchUserPosts = async (userId) => {
   const response = await fetch(`/api/users/${userId}/posts`);
-  const data = await response.json();
-  return data;
+  return response;
 };
 
 export const createPost = async (post, id) => {
@@ -34,6 +33,13 @@ export const updatePost = async (post, id) => {
       prompt: post.prompt,
       tag: post.tag,
     }),
+  });
+  return response;
+};
+
+export const deletePost = async (id) => {
+  const response = await fetch(`/api/prompt/${id}`, {
+    method: "DELETE",
   });
   return response;
 };
