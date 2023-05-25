@@ -10,7 +10,7 @@ import { routs } from "@utils/routs";
 
 const MyProfile = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [posts, setPosts] = useState([]);
 
   const handleEdit = (post) => {
@@ -20,13 +20,13 @@ const MyProfile = () => {
   const handleDelete = async (post) => {};
 
   useEffect(() => {
-    if (session?.user.id) {
-      (async () => {
+    (async () => {
+      if (status === "authenticated") {
         const posts = await fetchUserPosts(session?.user.id);
         setPosts(posts);
-      })();
-    }
-  }, []);
+      }
+    })();
+  }, [status]);
 
   return (
     <Profile
