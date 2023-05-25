@@ -21,3 +21,9 @@ export const createPost = async (post, id) => {
   });
   return response;
 };
+
+export const getPost = async (id) => {
+  const response = await fetch(`/api/prompt/${id}`);
+  const data = await response.json();
+  return data;
+};

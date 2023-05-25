@@ -16,6 +16,7 @@ const MyProfile = () => {
   const handleEdit = (post) => {
     router.push(`${routs.updatePrompt}?id=${post._id}`);
   };
+
   const handleDelete = async (post) => {};
 
   useEffect(() => {
