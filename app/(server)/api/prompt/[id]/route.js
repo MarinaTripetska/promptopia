@@ -1,4 +1,5 @@
 import Prompt from "@app/(server)/models/prompt";
+import { addHash } from "@app/(server)/utils/addHash";
 import { connectToDB } from "@app/(server)/utils/database";
 
 //GET (read)
@@ -34,7 +35,7 @@ export const PATCH = async (request, { params }) => {
     }
 
     existingPrompt.prompt = prompt;
-    existingPrompt.tag = tag;
+    existingPrompt.tag = addHash(tag);
     await existingPrompt.save();
 
     return new Response(JSON.stringify(existingPrompt), { status: 200 });
