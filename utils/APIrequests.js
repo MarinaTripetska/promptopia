@@ -1,7 +1,6 @@
-export const fetchPosts = async () => {
+export const getPosts = async () => {
   const response = await fetch("/api/prompt");
-  const data = await response.json();
-  return data;
+  return response;
 };
 
 export const fetchUserPosts = async (userId) => {

@@ -50,6 +50,7 @@ const MyProfile = () => {
         }
       }
     })();
+    34;
   }, [status]);
 
   return (

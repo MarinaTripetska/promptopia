@@ -8,11 +8,7 @@ import { routs } from "@utils/routs";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
-  // console.log("session: ", session);
   const pathName = usePathname();
-  // console.log("path: ", pathName);
-  const router = useRouter();
-  // console.log("router: ", router);
 
   const [copied, setCopied] = useState("");
 
@@ -64,21 +60,25 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       </div>
 
       <p className="my-4 font-satoshi text-sm text-gray-700 ">{post.prompt}</p>
-      <button
-        type="button"
-        className="font-inner text-sm blue_gradient"
-        title="filter by a tag"
-        onClick={() => handleTagClick && handleTagClick(post.tag)}
-      >
-        {post.tag}
-      </button>
+
+      {post.tag.split(" ").map((tag) => (
+        <button
+          key={tag}
+          type="button"
+          className="font-inner text-sm blue_gradient pr-1"
+          title="filter by a tag"
+          onClick={() => handleTagClick(tag)}
+        >
+          {tag}
+        </button>
+      ))}
 
       {session?.user.id === post.creator._id && pathName === routs.profile && (
         <div className="mt-2 flex-center gap-4 border-t border-gray-100 pt-2">
           <button
             type="button"
             className="font-inter text-sm green_gradient cursor-pointer"
-            onClick={() => handleEdit(post)}
+            onClick={() => handleEdit && handleEdit(post)}
           >
             Edit
           </button>
@@ -86,7 +86,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           <button
             type="button"
             className="font-inter text-sm orange_gradient cursor-pointer"
-            onClick={() => handleDelete(post)}
+            onClick={() => handleDelete && handleDelete(post)}
           >
             Delete
           </button>
