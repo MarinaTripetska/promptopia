@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
-import Profile from "@components/profile";
+import Profile from "@components/Profile";
 import { fetchUserPosts } from "@utils/APIrequests";
 
 const UserProfile = ({ params }) => {
@@ -23,7 +23,6 @@ const UserProfile = ({ params }) => {
           }
 
           const data = await response.json();
-
           setUserPosts(data);
         } catch (error) {
           console.log(error);
